@@ -27,7 +27,7 @@ CC ?= $(CROSS_COMPILE)gcc
 MSG = -g -O0 -Wall
 CFLAGS += $(MSG) $(DEBUG)
 
-${TARGET}:${OBJ_O}
+${TARGET}:out_dir ${OBJ_O}
 	$(CC) $(CFLAGS) $(OBJ_O) -o $@ $(LIB)
     
 ${DIR_BIN}/%.o:$(DIR_Examples)/%.c
@@ -45,6 +45,9 @@ ${DIR_BIN}/%.o:$(DIR_GUI)/%.c
 ${DIR_BIN}/%.o:$(DIR_Config)/%.c
 	$(CC) $(CFLAGS) -c  $< -o $@ $(LIB)
 	
+out_dir:
+	mkdir -p ${DIR_BIN}
+	
 clean :
-	rm $(DIR_BIN)/*.* 
+	rm -d -r $(DIR_BIN) 
 	rm $(TARGET) 
