@@ -14,6 +14,7 @@
 #include <linux/i2c.h>
 #include <linux/delay.h>
 #include <linux/kernel.h>
+//#include <i2c-dev.h>
  
 #define I2C_BUS_AVAILABLE   (          1 )              // I2C Bus available in our Raspberry Pi
 #define SLAVE_DEVICE_NAME   ( "ETX_OLED" )              // Device and Driver Name
@@ -241,8 +242,9 @@ static int __init etx_driver_init(void)
     
     if( etx_i2c_adapter != NULL )
     {
-        etx_i2c_client_oled = i2c_new_device(etx_i2c_adapter, &oled_i2c_board_info);
-        
+    
+        etx_i2c_client_oled = i2c_new_client_device(etx_i2c_adapter, &oled_i2c_board_info);
+//        etx_i2c_client_oled = i2c_acpi_new_device(etx_i2c_adapter, &oled_i2c_board_info);
         if( etx_i2c_client_oled != NULL )
         {
             i2c_add_driver(&etx_oled_driver);
